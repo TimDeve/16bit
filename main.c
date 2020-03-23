@@ -1,9 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main(int argc, char *argv[])
 {
-  const char *hexstring = argv[1];
+  const char *mode;
+  const char *hexstring;
+
+  if (argc == 2) {
+    mode = "-h";
+    hexstring = argv[1];
+  } else if (argc == 3) {
+    mode = argv[1];
+    hexstring = argv[2];
+  } else {
+    exit(1);
+  }
+
 
   int color24 = (int)strtol(hexstring, NULL, 0);
 
@@ -19,5 +32,9 @@ int main(int argc, char *argv[])
   color16 = color16 | (green << 5);
   color16 = color16 | blue;
 
-  printf("0x%04X\n", color16);
+  if (strcmp(mode, "-d") == 0) {
+    printf("%i\n", color16);
+  } else {
+    printf("0x%04X\n", color16);
+  }
 }
